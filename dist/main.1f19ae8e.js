@@ -117,79 +117,128 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"C:/Users/Xiaomi/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
+})({"main.js":[function(require,module,exports) {
+var slideControl1 = document.querySelector(".slide1-control");
+var slideControl2 = document.querySelector(".slide2-control");
+var slideControl3 = document.querySelector(".slide3-control");
+var showContainer = document.querySelector(".show-container");
+var changeRange = document.querySelector(".range-slide"); // Toggle page buttons
 
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
+slideControl1.addEventListener("click", function (evt) {
+  evt.preventDefault();
+  slideControl1.classList.add("active");
+  slideControl2.classList.remove("active");
+  slideControl3.classList.remove("active");
+
+  if (showContainer.classList.contains("show-slide2")) {
+    showContainer.classList.remove("show-slide2");
   }
 
-  return bundleURL;
-}
+  if (showContainer.classList.contains("show-slide3")) {
+    showContainer.classList.remove("show-slide3");
+  }
 
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+  showContainer.classList.add("show-slide1");
+});
+slideControl2.addEventListener("click", function (evt) {
+  evt.preventDefault();
+  slideControl1.classList.remove("active");
+  slideControl2.classList.add("active");
+  slideControl3.classList.remove("active");
 
-    if (matches) {
-      return getBaseURL(matches[0]);
+  if (showContainer.classList.contains("show-slide1")) {
+    showContainer.classList.remove("show-slide1");
+  }
+
+  if (showContainer.classList.contains("show-slide3")) {
+    showContainer.classList.remove("show-slide3");
+  }
+
+  showContainer.classList.add("show-slide2");
+});
+slideControl3.addEventListener("click", function (evt) {
+  evt.preventDefault();
+  slideControl1.classList.remove("active");
+  slideControl2.classList.remove("active");
+  slideControl3.classList.add("active");
+
+  if (showContainer.classList.contains("show-slide1")) {
+    showContainer.classList.remove("show-slide1");
+  }
+
+  if (showContainer.classList.contains("show-slide2")) {
+    showContainer.classList.remove("show-slide2");
+  }
+
+  showContainer.classList.add("show-slide3");
+}); // Slider functionality
+
+changeRange.addEventListener("input", changeValue);
+
+function changeValue() {
+  var valueRange = document.querySelector(".range-slide").value;
+  var slideContainer3 = document.querySelector(".slide3-container");
+
+  if (valueRange <= 100 && valueRange > 75) {
+    slideContainer3.classList.remove("show-item2");
+    slideContainer3.classList.add("show-item3");
+  }
+
+  if (valueRange <= 75 && valueRange > 25) {
+    slideContainer3.classList.remove("show-item3");
+    slideContainer3.classList.remove("show-item1");
+    slideContainer3.classList.add("show-item2");
+  }
+
+  if (valueRange >= 0 && valueRange <= 25) {
+    slideContainer3.classList.remove("show-item2");
+    slideContainer3.classList.add("show-item1");
+  }
+} // Defining swipes
+
+
+var touchstartY = 0;
+var touchendY = 0;
+showContainer.addEventListener('touchstart', function (event) {
+  touchstartY = event.touches[0].clientY;
+}, false);
+showContainer.addEventListener('touchend', function (event) {
+  touchendY = event.changedTouches[0].clientY;
+  moveTouch();
+}, false);
+
+function moveTouch() {
+  // Swipe down
+  if (touchendY < touchstartY && showContainer.classList.contains("show-slide1")) {
+    showContainer.classList.remove("show-slide1");
+    showContainer.classList.add("show-slide2");
+    slideControl1.classList.remove("active");
+    slideControl2.classList.add("active");
+  } else {
+    if (touchendY < touchstartY && showContainer.classList.contains("show-slide2")) {
+      showContainer.classList.remove("show-slide2");
+      showContainer.classList.add("show-slide3");
+      slideControl2.classList.remove("active");
+      slideControl3.classList.add("active");
+    }
+  } // Swipe up
+
+
+  if (touchendY > touchstartY && showContainer.classList.contains("show-slide2")) {
+    showContainer.classList.remove("show-slide2");
+    showContainer.classList.add("show-slide1");
+    slideControl2.classList.remove("active");
+    slideControl1.classList.add("active");
+  } else {
+    if (touchendY > touchstartY && showContainer.classList.contains("show-slide3")) {
+      showContainer.classList.remove("show-slide3");
+      showContainer.classList.add("show-slide2");
+      slideControl3.classList.remove("active");
+      slideControl2.classList.add("active");
     }
   }
-
-  return '/';
 }
-
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
-}
-
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"C:/Users/Xiaomi/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
-  };
-
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-
-var cssTimeout = null;
-
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
-
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-
-    cssTimeout = null;
-  }, 50);
-}
-
-module.exports = reloadCSS;
-},{"./bundle-url":"C:/Users/Xiaomi/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"styles/fonts.css":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"./..\\fonts\\ny\\regular.woff2":[["regular.5c75b062.woff2","fonts/ny/regular.woff2"],"fonts/ny/regular.woff2"],"./..\\fonts\\ny\\regular.woff":[["regular.013964be.woff","fonts/ny/regular.woff"],"fonts/ny/regular.woff"],"_css_loader":"C:/Users/Xiaomi/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"C:/Users/Xiaomi/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{}],"C:/Users/Xiaomi/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -217,7 +266,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65214" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49976" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -393,5 +442,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["C:/Users/Xiaomi/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
-//# sourceMappingURL=/fonts.a1a9c752.js.map
+},{}]},{},["C:/Users/Xiaomi/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","main.js"], null)
+//# sourceMappingURL=/main.1f19ae8e.js.map

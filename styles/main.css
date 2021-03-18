@@ -1,4 +1,11 @@
-@import './fonts.css';
+
+@font-face {
+	font-family: "GothamPro", sans-serif;
+	src: url('./assets/GothamPro.woff2') format('woff2'),
+		url('./assets/GothamPro.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
+}
 
 html,
 body {
@@ -97,7 +104,7 @@ body {
 
 	font-size: 50px;
 	font-weight: normal;
-	font-family: "NY", sans-serif;
+	font-family: "GothamPro", sans-serif;
 }
 
 .slide1 p[class^="caption"] {
@@ -188,7 +195,7 @@ body {
 	padding-left: 400px;
 	padding-top: 15px;
 
-	font-family: "NY", sans-serif;
+	font-family: "GothamPro", sans-serif;
 	font-size: 15px;
 	color: #ffffff;
 
@@ -238,7 +245,7 @@ body {
 
 	font-size: 50px;
 	font-weight: normal;
-	font-family: "NY", sans-serif;
+	font-family: "GothamPro", sans-serif;
 }
 
 .slide2 .slide-down-slide p {
@@ -261,7 +268,7 @@ body {
 	background-color: #0c1446; 
 	background: url("../img/slide3-bg.png") no-repeat 0 0;
 
-	font-family: "NY", sans-serif;
+	font-family: "GothamPro", sans-serif;
 	color: #ffffff;	
 	font-weight: normal;
 	white-space: nowrap;

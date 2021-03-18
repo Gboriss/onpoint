@@ -1,11 +1,11 @@
+
 @font-face {
-	font-family: 'NY', sans-serif;
-	src: url('/regular.5c75b062.woff2') format('woff2'),
-		 url('/regular.013964be.woff') format('woff');
+	font-family: "GothamPro", sans-serif;
+	src: url('/GothamPro.36d0e0ee.woff2') format('woff2'),
+		url('/GothamPro.b2be58ab.woff') format('woff');
 	font-weight: 400;
 	font-style: normal;
 }
-
 
 html,
 body {
@@ -104,7 +104,7 @@ body {
 
 	font-size: 50px;
 	font-weight: normal;
-	font-family: "NY", sans-serif;
+	font-family: "GothamPro", sans-serif;
 }
 
 .slide1 p[class^="caption"] {
@@ -195,7 +195,7 @@ body {
 	padding-left: 400px;
 	padding-top: 15px;
 
-	font-family: "NY", sans-serif;
+	font-family: "GothamPro", sans-serif;
 	font-size: 15px;
 	color: #ffffff;
 
@@ -245,7 +245,7 @@ body {
 
 	font-size: 50px;
 	font-weight: normal;
-	font-family: "NY", sans-serif;
+	font-family: "GothamPro", sans-serif;
 }
 
 .slide2 .slide-down-slide p {
@@ -268,7 +268,7 @@ body {
 	background-color: #0c1446; 
 	background: url("/slide3-bg.3a592eb9.png") no-repeat 0 0;
 
-	font-family: "NY", sans-serif;
+	font-family: "GothamPro", sans-serif;
 	color: #ffffff;	
 	font-weight: normal;
 	white-space: nowrap;
